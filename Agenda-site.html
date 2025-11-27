@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AgendAí - Gestão Estética Inteligente</title>
+
+  <!-- Fonte -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #050819;
+      --bg-soft: #0b1121;
+      --card: #0f172a;
+      --card-soft: #111827;
+      --primary: #ec4899;
+      --primary-soft: rgba(236, 72, 153, 0.16);
+      --accent: #22c55e;
+      --text: #e5e7eb;
+      --text-soft: #9ca3af;
+      --border: #1f2937;
+      --radius-lg: 1.3rem;
+      --radius-xl: 1.9rem;
+      --shadow-soft: 0 24px 65px rgba(15, 23, 42, 0.95);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 0% 0%, #1f2937 0, transparent 45%),
+        radial-gradient(circle at 100% 0%, #4b1640 0, transparent 50%),
+        var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 2.5rem 1.25rem 5rem; /* mais espaço em cima e embaixo */
+    }
+
+    /* NAVBAR */
+
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      padding-bottom: 0.75rem;
+      backdrop-filter: blur(18px);
+    }
+
+    .nav-inner {
+      border-radius: 999px;
+      border: 1px solid rgba(31, 41, 55, 0.9);
+      background: radial-gradient(circle at 0 0, rgba(236, 72, 153, 0.12), transparent 55%),
+        rgba(15, 23, 42, 0.96);
+      box-shadow: 0 18px 45px rgba(15, 23, 42, 0.9);
+      padding: 0.7rem 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+
+    .brand-text-title {
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      font-size: 1rem;
+    }
+
+    .brand-text-sub {
+      font-size: 0.7rem;
+      color: var(--text-soft);
+    }
+
+    .nav-links {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .nav-links a {
+      position: relative;
+      padding-bottom: 2px;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, #ec4899, #22c55e);
+      border-radius: 999px;
+      transition: width 0.18s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      margin-left: 1rem;
+      display: flex;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .btn {
+      border-radius: 999px;
+      padding: 0.5rem 1rem;
+      border: 0px solid rgba(55, 65, 81, 0.9);
+      background: transparent;
+      color: var(--text-soft);
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .btn-outline:hover {
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #ec4899, #db2777);
+      border-color: rgba(236, 72, 153, 0.9);
+      color: #fdf2f8;
+      box-shadow: 0 12px 30px rgba(236, 72, 153, 0.8);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 16px 40px rgba(236, 72, 153, 1);
+    }
+
+    /* HERO – agora coluna única, mais embaixo e espaçada */
+
+    .hero {
+      max-width: 1480px;
+      margin: 5rem auto 0;  /* desce o conteúdo */
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.18rem 0.35rem;
+      border-radius: 999px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      background: radial-gradient(circle at 0 0, rgba(236, 72, 153, 0.22), transparent 60%);
+      font-size: 0.72rem;
+      color: var(--text-soft);
+      margin-bottom: 0.4rem;
+    }
+
+    .hero-eyebrow span {
+      border-radius: 999px;
+      padding: 0.2rem 0.55rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      color: #f9a8d4;
+      font-weight: 500;
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 3.2vw + 1rem, 3.2rem);
+      text-align: center;
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-title span {
+      background: linear-gradient(120deg, #f9a8d4, #ec4899, #22c55e);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 1rem;
+      color: var(--text-soft);
+     text-align: justify;
+     text-align: center;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      
+      margin-top: 0.8rem;
+    }
+
+    .hero-note {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-top: 0.6rem;
+    }
+
+    /* SEÇÕES – mais espaço entre elas */
+
+    section {
+      margin-top: 5rem;
+    }
+
+    .section-header {
+      margin-bottom: 2.2rem;
+      display: flex;
+      justify-content: space-between;
+      gap: 1.2rem;
+      align-items: flex-end;
+      flex-wrap: wrap;
+    }
+
+    .section-eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      margin-bottom: 0.4rem;
+    }
+
+    .section-title {
+      font-size: 1.6rem;
+      letter-spacing: -0.03em;
+    }
+
+    .section-title span {
+      background: linear-gradient(120deg, #f9a8d4, #22c55e);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      max-width: 24rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.4rem;
+    }
+
+    .feature-card {
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at 0 0, rgba(236, 72, 153, 0.18), transparent 55%),
+        var(--card-soft);
+      border: 1px solid var(--border);
+      padding: 1.1rem 1.05rem;
+      font-size: 0.86rem;
+    }
+
+    .feature-icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 0.9rem;
+      background: radial-gradient(circle at 20% 0, #ec4899, #4c1d95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+      margin-bottom: 0.55rem;
+      box-shadow: 0 10px 24px rgba(236, 72, 153, 0.65);
+    }
+
+    .feature-title {
+      font-weight: 500;
+      margin-bottom: 0.3rem;
+    }
+
+    .feature-text {
+      color: var(--text-soft);
+      font-size: 0.82rem;
+    }
+
+    /* BENEFÍCIOS */
+
+    .benefits {
+      display: grid;
+      grid-template-columns: 1.1fr 1.1fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .benefits-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      font-size: 0.88rem;
+      color: var(--text-soft);
+    }
+
+    .benefit-item {
+      display: flex;
+      gap: 0.55rem;
+      align-items: flex-start;
+    }
+
+    .benefit-bullet {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(236, 72, 153, 0.7);
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #f9a8d4;
+      margin-top: 0.1rem;
+    }
+
+    .benefits-card {
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at 100% 0, rgba(59, 130, 246, 0.2), transparent 55%),
+        var(--card);
+      border: 1px solid var(--border);
+      padding: 1.05rem;
+      font-size: 0.82rem;
+    }
+
+    .benefits-card-label {
+      font-size: 0.8rem;
+      color: var(--text-soft);
+      margin-bottom: 0.4rem;
+    }
+
+    .benefits-card-number {
+      font-size: 1.1rem;
+    }
+
+    .benefits-card-small {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      margin-top: 0.4rem;
+    }
+
+    /* CTA FINAL */
+
+    .cta-final {
+      margin-top: 4rem;
+      border-radius: var(--radius-xl);
+      padding: 1.5rem 1.3rem;
+      background:
+        radial-gradient(circle at 0 0, rgba(236, 72, 153, 0.3), transparent 60%),
+        radial-gradient(circle at 100% 0, rgba(34, 197, 94, 0.25), transparent 60%),
+        rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(55, 65, 81, 0.95);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .cta-title {
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+    }
+
+    .cta-text {
+      font-size: 0.86rem;
+      color: var(--text-soft);
+      max-width: 26rem;
+    }
+
+    /* FOOTER */
+
+    footer {
+      margin-top: 3rem;
+      padding-top: 1.7rem;
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      border-top: 1px solid rgba(15, 23, 42, 0.95);
+      display: flex;
+      justify-content: space-between;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    footer a {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-style: dotted;
+    }
+
+    /* RESPONSIVO */
+
+    @media (max-width: 900px) {
+      .nav-inner {
+        border-radius: 1.1rem;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      .hero {
+        margin-top: 4rem;
+        padding: 0 0.3rem;
+      }
+
+      .grid-3 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .benefits {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .cta-final {
+        border-radius: 1.4rem;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .page {
+        padding: 2rem 1rem 4.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+    <!-- NAV -->
+    <header class="nav">
+      <div class="nav-inner">
+        <div class="brand">
+          <div class="brand-logo">A</div>
+          <div>
+            <div class="brand-text-title">AgendAí</div>
+            <div class="brand-text-sub">Gestão estética inteligente</div>
+          </div>
+        </div>
+
+        <nav class="nav-links">
+          <a href="#como-funciona">Como funciona</a>
+          <a href="#recursos">Recursos</a>
+          <a href="#beneficios">Benefícios</a>
+        </nav>
+
+        <div class="nav-cta">
+          <button class="btn btn-outline" onclick="scrollToSection('beneficios')">
+            Ver benefícios
+          </button>
+          <button class="btn btn-primary" onclick="scrollToSection('cta')">
+            Quero conhecer
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- HERO (só texto, mais pra baixo) -->
+    <main>
+      <section class="hero" id="topo">
+        <div class="hero-eyebrow">
+          <span>Software para estética</span>
+          Menos no-show, mais agenda cheia
+        </div>
+
+        <h1 class="hero-title">
+          Organize sua clínica com um painel
+          <span>bonito, simples e em tempo real.</span>
+        </h1>
+
+<br />
+
+
+        <p class="hero-subtitle">
+          O AgendAí centraliza marcações, clientes e lembretes automáticos em uma interface
+          visual inspirada na rotina de clínicas e estúdios de estética. Ideal para mostrar,
+          no TCC, como a tecnologia melhora a gestão de serviços.
+        </p>
+
+
+        
+      </section>
+
+      <!-- COMO FUNCIONA -->
+      <section id="como-funciona">
+        <div class="section-header">
+          <div>
+            <div class="section-eyebrow">Como funciona</div>
+            <h2 class="section-title">
+              Um fluxo pensado para <span>cliente, profissional e recepção</span>.
+            </h2>
+          </div>
+          <p class="section-subtitle">
+            O objetivo é evitar confusão de horários, reduzir faltas e deixar claro,
+            no TCC, o caminho que a informação percorre dentro do sistema.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="feature-card">
+            <div class="feature-icon">1</div>
+            <h3 class="feature-title">Cliente escolhe serviço</h3>
+            <p class="feature-text">
+              No app, o cliente busca o tipo de procedimento (ex.: limpeza de pele)
+              e encontra a clínica ou profissional.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">2</div>
+            <h3 class="feature-title">Define horário e profissional</h3>
+            <p class="feature-text">
+              A interface mostra horários abertos; o cliente escolhe o que encaixa
+              melhor na agenda dele.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">3</div>
+            <h3 class="feature-title">Clínica acompanha a agenda</h3>
+            <p class="feature-text">
+              A recepção visualiza tudo em uma tela clara, com status de confirmação
+              e lembretes.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- RECURSOS -->
+      <section id="recursos">
+        <div class="section-header">
+          <div>
+            <div class="section-eyebrow">Recursos principais</div>
+            <h2 class="section-title">
+              Foco em <span>visualização clara</span> e ações simples.
+            </h2>
+          </div>
+          <p class="section-subtitle">
+            Sem poluição visual: apenas o que realmente faz diferença na rotina.
+          </p>
+        </div>
+
+        <div class="grid-3">
+          <article class="feature-card">
+            <div class="feature-icon">📅</div>
+            <h3 class="feature-title">Agenda diária</h3>
+            <p class="feature-text">
+              Visão do dia com horários, salas e profissionais, evitando choques e
+              sobreposição de sessões.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">🔔</div>
+            <h3 class="feature-title">Lembretes automáticos</h3>
+            <p class="feature-text">
+              Mensagens de lembrete e confirmação que reduzem faltas e melhoram a
+              organização do dia.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon">👤</div>
+            <h3 class="feature-title">Histórico do cliente</h3>
+            <p class="feature-text">
+              Registro simples dos atendimentos, ajudando a manter cuidado contínuo
+              sem fichas em papel.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- BENEFÍCIOS -->
+      <section id="beneficios">
+        <div class="section-header">
+          <div>
+            <div class="section-eyebrow">Benefícios</div>
+            <h2 class="section-title">
+              Para mostrar, na prática, <span>o valor da solução</span>.
+            </h2>
+          </div>
+          <p class="section-subtitle">
+            No AgendAí, adotou-se o modelo freemium, em que o aplicativo é oferecido gratuitamente com funcionalidades básicas, mas com opções pagas para recursos avançados. Além disso, a plataforma também gera receita por meio de anúncios veiculados dentro do aplicativo. 
+          </p>
+        </div>
+
+        <div class="benefits">
+          <div class="benefits-list">
+            <div class="benefit-item">
+              <div class="benefit-bullet">✓</div>
+              <p>Agenda visual que reduz erros de marcação e retrabalho na recepção.</p>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-bullet">✓</div>
+              <p>Lembretes automáticos que diminuem o número de faltas sem aviso.</p>
+            </div>
+            <div class="benefit-item">
+              <div class="benefit-bullet">✓</div>
+              <p>Mais clareza na experiência do cliente, com horário e serviço organizados.</p>
+            </div>
+          </div>
+
+          <div class="benefits-card">
+            <div class="benefits-card-label">Exemplo de impacto esperado</div>
+            <div class="benefits-card-number">
+              Redução de faltas não justificadas e mais controle de agenda.
+            </div>
+            <div class="benefits-card-small">
+              Aplicativo móvel que facilita e otimiza a atividade socioeconômica
+de CNPJs cadastrados na Receita Federal, como barbearias, manicures, pedicures, entre outros. 
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA FINAL -->
+      <section id="cta">
+        <div class="cta-final">
+          <div>
+            <h3 class="cta-title">página vitrine do AgendAí.</h3>
+            <p class="cta-text">
+            TCC 2025 : projeto de gestão estética inteligente.
+            </p>
+          </div>
+          <button class="btn btn-primary" onclick="scrollToSection('topo')">
+            Voltar para o topo
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <span>© <span id="year"></span> AgendAí — Página demonstrativa.</span>
+      <a href="#topo" onclick="scrollToSection('topo'); return false;">Ver hero novamente</a>
+    </footer>
+  </div>
+
+  <script>
+    function scrollToSection(id) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      window.scrollTo({
+        top: el.offsetTop - 80,
+        behavior: "smooth",
+      });
+    }
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
